@@ -5,7 +5,9 @@ export default function ContentLeft() {
 		<div
 			className='col-lg-4 col-md-12'
 			style={{ backgroundColor: 'gray', height: '80vh' }}>
-			<div></div>
+			<div>
+				<button>Reset</button>
+			</div>
 		</div>
 	);
 }

@@ -4,8 +4,10 @@ export default function ContentMiddle() {
 	return (
 		<div
 			className='col-lg-4 col-md-12'
-			style={{ backgroundColor: 'maroon', height: '80vh' }}>
-			<div></div>
+			style={{ backgroundColor: 'yellow', height: '80vh' }}>
+			<div>
+				<p>Total votes: </p>
+			</div>
 		</div>
 	);
 }

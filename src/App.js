@@ -1,21 +1,13 @@
-import ContentLeft from './components/ContentLeft';
-import ContentMiddle from './components/ContentMiddle';
-import ContentRight from './components/ContentRight';
+import React, { useState } from 'react';
+
 import ContentTop from './components/ContentTop';
+import Content from './components/Content';
 
 export default function App() {
 	return (
 		<div className='container-fluid' style={{ padding: '0 0 0 0' }}>
 			<ContentTop />
-			<div
-				className='container-fluid'
-				style={{ backgroundColor: 'green', height: '80vh' }}>
-				<div className='row'>
-					<ContentLeft />
-					<ContentMiddle />
-					<ContentRight />
-				</div>
-			</div>
+			<Content />
 		</div>
 	);
 }

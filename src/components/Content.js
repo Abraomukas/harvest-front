@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 
 export default function Content() {
 	const [numOptions, setNumOptions] = useState(2);
-	const [options, setOptions] = useState([]);
+	const [options, setOptions] = useState([{ option: '' }, { option: '' }]);
+
+	console.log(options.length);
 
 	const addOption = () => {
 		setNumOptions(numOptions + 1);
@@ -14,6 +16,13 @@ export default function Content() {
 
 		tmp.splice(index, 1);
 		setNumOptions(numOptions - 1);
+		setOptions(tmp);
+	};
+
+	const handleOptionChange = (event, index) => {
+		const tmp = [...options];
+		tmp[index][event.target.name];
+
 		setOptions(tmp);
 	};
 
@@ -33,26 +42,11 @@ export default function Content() {
 					<div className='container-fluid'>
 						<div className='input-group mb-3'>
 							<input
+								id='question'
 								type='text'
 								className='form-control'
 								placeholder='Introduce your question here'
 								aria-label='question'
-							/>
-						</div>
-						<div className='input-group mb-3'>
-							<input
-								type='text'
-								className='form-control'
-								placeholder='Option #1'
-								aria-label='option'
-							/>
-						</div>
-						<div className='input-group mb-3'>
-							<input
-								type='text'
-								className='form-control'
-								placeholder='Option #2'
-								aria-label='option'
 							/>
 						</div>
 						{/* Conditional rendering */}
@@ -61,11 +55,13 @@ export default function Content() {
 								<div key={index} className='input-group mb-3'>
 									<input
 										type='text'
+										name='option'
+										value={option.option}
 										className='form-control'
 										placeholder='New option'
 										aria-label='option'
 									/>
-									{setOptions.length < 8 && (
+									{options.length > 2 && (
 										<button
 											type='button'
 											className='btn btn-primary'
@@ -78,26 +74,31 @@ export default function Content() {
 								</div>
 							);
 						})}
-						<div className='input-group mb-3'>
-							<input
-								type='text'
-								className='form-control'
-								placeholder='New option'
-								aria-label='option'
-							/>
-							{numOptions < 10 && (
+						<div className='mb-2 d-flex justify-content-around'>
+							{options.length < 10 && (
 								<button
 									type='button'
 									className='btn btn-primary'
 									onClick={() => {
 										addOption();
 									}}>
-									+
+									one more option
 								</button>
 							)}
+
+							<button
+								type='button'
+								className='btn btn-primary'
+								onClick={() => {
+									reset();
+								}}>
+								create
+							</button>
 						</div>
-						<div className='d-flex justify-content-around'>
-							<p>{numOptions}/10 possible answers</p>
+						<div className='my-1 text-center'>
+							<p>{numOptions}/10 possible options</p>
+						</div>
+						<div className='mt-2 text-center'>
 							<button
 								type='button'
 								className='btn btn-primary'

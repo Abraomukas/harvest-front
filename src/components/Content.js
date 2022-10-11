@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
 export default function Content() {
-	const [numOptions, setNumOptions] = useState(2);
 	const [options, setOptions] = useState([{ option: '' }, { option: '' }]);
+	const [visible, setVisible] = useState(false);
+	const [questionText, setQuestionText] = useState('');
 
-	console.log(options.length);
+	let questionTextField;
 
 	const addOption = () => {
-		setNumOptions(numOptions + 1);
 		setOptions([...options, { option: '' }]);
 	};
 
@@ -15,14 +15,25 @@ export default function Content() {
 		const tmp = [...options];
 
 		tmp.splice(index, 1);
-		setNumOptions(numOptions - 1);
 		setOptions(tmp);
 	};
 
-	const handleOptionChange = (event, index) => {
+	const handleInputChange = (index, event) => {
 		const tmp = [...options];
-		tmp[index][event.target.name];
 
+		tmp[index][event.target.name] = event.target.value;
+		setOptions(tmp);
+	};
+
+	const createQuestion = () => {
+		let tmp = [...options];
+		setQuestionText(questionTextField.value);
+
+		tmp = tmp.filter((option) => {
+			return option.option !== '';
+		});
+
+		setVisible(true);
 		setOptions(tmp);
 	};
 
@@ -47,6 +58,9 @@ export default function Content() {
 								className='form-control'
 								placeholder='Introduce your question here'
 								aria-label='question'
+								ref={(element) => {
+									questionTextField = element;
+								}}
 							/>
 						</div>
 						{/* Conditional rendering */}
@@ -60,6 +74,9 @@ export default function Content() {
 										className='form-control'
 										placeholder='New option'
 										aria-label='option'
+										onChange={(event) => {
+											handleInputChange(index, event);
+										}}
 									/>
 									{options.length > 2 && (
 										<button
@@ -90,13 +107,13 @@ export default function Content() {
 								type='button'
 								className='btn btn-primary'
 								onClick={() => {
-									reset();
+									createQuestion();
 								}}>
 								create
 							</button>
 						</div>
 						<div className='my-1 text-center'>
-							<p>{numOptions}/10 possible options</p>
+							<p>{options.length}/10 possible options</p>
 						</div>
 						<div className='mt-2 text-center'>
 							<button
@@ -114,7 +131,16 @@ export default function Content() {
 				<div
 					className='col-lg-4 col-md-12'
 					style={{ backgroundColor: 'blue', height: '80vh' }}>
-					<div></div>
+					{visible && (
+						<div className='text-center'>
+							<h5 className='text-white'>{questionText}</h5>
+							<ul>
+								{options.map((option, index) => {
+									return <li key={index}>{option.option}</li>;
+								})}
+							</ul>
+						</div>
+					)}
 				</div>
 				{/* RIGHT CONTENT */}
 				<div

@@ -41,6 +41,8 @@ export default function Content() {
 		window.location.reload();
 	};
 
+	const createGraph = () => {};
+
 	return (
 		<div
 			className='container-fluid'
@@ -129,16 +131,44 @@ export default function Content() {
 				</div>
 				{/* CENTER CONTENT */}
 				<div
-					className='col-lg-4 col-md-12'
+					className='col-lg-4 col-md-12 d-flex align-items-center'
 					style={{ backgroundColor: 'blue', height: '80vh' }}>
 					{visible && (
-						<div className='text-center'>
-							<h5 className='text-white'>{questionText}</h5>
-							<ul>
-								{options.map((option, index) => {
-									return <li key={index}>{option.option}</li>;
-								})}
-							</ul>
+						<div className='container-fluid d-flex justify-content-center'>
+							<div className='text-center'>
+								<h5 className='text-white'>{questionText}</h5>
+								<ul>
+									{options.map((option, index) => {
+										return (
+											<div key={index} className='form-check'>
+												<input
+													className='form-check-input'
+													type='radio'
+													name='flexRadioDefault'
+													id='flexRadioDefault1'
+												/>
+												<label
+													className='form-check-label'
+													for='flexRadioDefault1'>
+													{option.option}
+												</label>
+											</div>
+										);
+									})}
+								</ul>
+								<div className='d-flex justify-content-center'>
+									<div className='mt-2'>
+										<button
+											type='button'
+											className='btn btn-primary'
+											onClick={() => {
+												createGraph();
+											}}>
+											vote
+										</button>
+									</div>
+								</div>
+							</div>
 						</div>
 					)}
 				</div>

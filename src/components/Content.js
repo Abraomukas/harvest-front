@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AnswersChart from './AnswersChart';
 
 export default function Content() {
 	const [options, setOptions] = useState([{ option: '' }, { option: '' }]);
@@ -41,6 +42,19 @@ export default function Content() {
 		window.location.reload();
 	};
 
+	const chartData = [
+		{ title: '1950', value: 2, color: '#000000' },
+		{ title: '1960', value: 3, color: '#000000' },
+		{ title: '1970', value: 3, color: '#000000' },
+		{ title: '1980', value: 4, color: '#000000' },
+		{ title: '1990', value: 5, color: '#000000' },
+		{ title: '2000', value: 6, color: '#000000' },
+		{ title: '2010', value: 7, color: '#000000' },
+		{ title: '2010', value: 7, color: '#000000' },
+		{ title: '2010', value: 8, color: '#000000' },
+		{ title: '2010', value: 10, color: '#000000' },
+	];
+
 	const createGraph = () => {};
 
 	return (
@@ -51,7 +65,7 @@ export default function Content() {
 				{/* LEFT CONTENT */}
 				<div
 					className='d-flex justify-content-center align-items-center col-lg-4 col-md-12'
-					style={{ backgroundColor: 'gray', height: '80vh' }}>
+					style={{ height: '80vh' }}>
 					<div className='container-fluid'>
 						<div className='input-group mb-3'>
 							<input
@@ -132,7 +146,7 @@ export default function Content() {
 				{/* CENTER CONTENT */}
 				<div
 					className='col-lg-4 col-md-12 d-flex align-items-center'
-					style={{ backgroundColor: 'blue', height: '80vh' }}>
+					style={{ height: '80vh' }}>
 					{visible && (
 						<div className='container-fluid d-flex justify-content-center'>
 							<div className='text-center'>
@@ -173,10 +187,14 @@ export default function Content() {
 					)}
 				</div>
 				{/* RIGHT CONTENT */}
-				<div
-					className='col-lg-4 col-md-12'
-					style={{ backgroundColor: 'yellow', height: '80vh' }}>
-					<div></div>
+				<div className='col-lg-4 col-md-12' style={{ height: '80vh' }}>
+					<div>
+						<div className='container-fluid d-flex justify-content-center'>
+							<div className='text-center'>
+								<AnswersChart answers={chartData} />
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

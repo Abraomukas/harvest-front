@@ -191,6 +191,7 @@ export default function Content() {
 					<div>
 						<div className='container-fluid d-flex justify-content-center'>
 							<div className='text-center'>
+								{/* Merge arrays */}
 								<AnswersChart answers={chartData} />
 							</div>
 						</div>

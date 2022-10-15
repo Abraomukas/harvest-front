@@ -73,7 +73,7 @@ export default function Content() {
 			<div className='row'>
 				{/* LEFT CONTENT */}
 				<div
-					className='d-flex justify-content-center align-items-center col-lg-4 col-md-12'
+					className='d-flex justify-content-center align-items-center col-lg-4 col-md-12 square border-top border-primary'
 					style={{ height: '80vh' }}>
 					<div className='container-fluid'>
 						<div className='input-group mb-3'>
@@ -157,7 +157,7 @@ export default function Content() {
 				</div>
 				{/* CENTER CONTENT */}
 				<div
-					className='col-lg-4 col-md-12 d-flex align-items-center'
+					className='col-lg-4 col-md-12 d-flex align-items-center square border-top border-start border-end border-primary'
 					style={{ height: '80vh' }}>
 					{visible && (
 						<div className='container-fluid d-flex justify-content-center'>
@@ -206,13 +206,9 @@ export default function Content() {
 				</div>
 				{/* RIGHT CONTENT */}
 				<div
-					className='container-fluid col-lg-4 col-md-12 d-flex align-items-center'
+					className='container-fluid col-lg-4 col-md-12 d-flex align-items-center justify-content-center square border-top border-start border-primary'
 					style={{ height: '80vh' }}>
-					{chartReady && (
-						<div>
-							<BarChart title={questionText} options={options} />
-						</div>
-					)}
+					{chartReady && <BarChart title={questionText} options={options} />}
 				</div>
 			</div>
 		</div>

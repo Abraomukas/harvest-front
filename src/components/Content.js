@@ -2,16 +2,14 @@ import React, { useState } from 'react';
 import BarChart from './BarChart';
 
 export default function Content() {
-	const [options, setOptions] = useState([
-		{ option: '', votes: 0 },
-		{ option: '', votes: 0 },
-	]);
+	const INPUT_LENGTH = 80;
+
+	const [options, setOptions] = useState([]);
 	const [vote, setVote] = useState(0);
+	const [answer, setAnswer] = useState('');
 	const [questionText, setQuestionText] = useState('');
 	const [visible, setVisible] = useState(false);
 	const [chartReady, setChartReady] = useState(false);
-
-	let questionTextField;
 
 	const addOption = () => {
 		setOptions([...options, { option: '', votes: 0 }]);
@@ -31,16 +29,24 @@ export default function Content() {
 		setOptions(tmp);
 	};
 
+	const handleQuestionChange = (event) => {
+		const tmpText = event.target.value;
+		setQuestionText(tmpText);
+	};
+
 	const createQuestion = () => {
 		let tmp = [...options];
-		setQuestionText(questionTextField.value);
 
 		tmp = tmp.filter((option) => {
 			return option.option !== '';
 		});
 
-		setVisible(true);
-		setOptions(tmp);
+		if (tmp.length >= 2) {
+			setVisible(true);
+			setOptions(tmp);
+		} else {
+			alert('In order to proceed, you need AT LEAST two valid options! ');
+		}
 	};
 
 	const reset = () => {
@@ -48,7 +54,8 @@ export default function Content() {
 	};
 
 	const onChangeRadio = (event) => {
-		const tmpVote = event.target.value;
+		const tmpVote = event.target.id;
+		setAnswer(options[tmpVote].option);
 		setVote(tmpVote);
 	};
 
@@ -76,9 +83,10 @@ export default function Content() {
 								className='form-control'
 								placeholder='Introduce your question here'
 								aria-label='question'
-								ref={(element) => {
-									questionTextField = element;
+								onChange={(event) => {
+									handleQuestionChange(event);
 								}}
+								maxLength={INPUT_LENGTH}
 							/>
 						</div>
 						{/* Conditional rendering */}
@@ -95,6 +103,7 @@ export default function Content() {
 										onChange={(event) => {
 											handleInputChange(index, event);
 										}}
+										maxLength={INPUT_LENGTH}
 									/>
 									{options.length > 2 && (
 										<button
@@ -126,7 +135,8 @@ export default function Content() {
 								className='btn btn-primary'
 								onClick={() => {
 									createQuestion();
-								}}>
+								}}
+								disabled={questionText === ''}>
 								create
 							</button>
 						</div>
@@ -156,17 +166,17 @@ export default function Content() {
 								<ul>
 									{options.map((option, index) => {
 										return (
-											<div
-												key={index}
-												className='form-check'
-												onChange={(event) => {
-													onChangeRadio(event);
-												}}>
+											<div key={index} className='form-check'>
 												<input
 													className='form-check-input'
 													type='radio'
 													name='flexRadioDefault'
-													value={index}
+													id={index}
+													value={option}
+													checked={answer === option.option}
+													onChange={(event) => {
+														onChangeRadio(event);
+													}}
 												/>
 												<label
 													className='form-check-label'
@@ -184,7 +194,8 @@ export default function Content() {
 											className='btn btn-primary'
 											onClick={() => {
 												createGraph();
-											}}>
+											}}
+											disabled={answer === ''}>
 											vote
 										</button>
 									</div>
@@ -198,7 +209,7 @@ export default function Content() {
 					className='container-fluid col-lg-4 col-md-12 d-flex align-items-center'
 					style={{ height: '80vh' }}>
 					{chartReady && (
-						<div className=''>
+						<div>
 							<BarChart title={questionText} options={options} />
 						</div>
 					)}

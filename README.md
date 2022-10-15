@@ -2,17 +2,18 @@
 
 If you are reading this, you are looking forward to seeing what I can do on the frontend side of things. Welcome!
 
-# How to use this application 
+# How to use this application
 
 ## Starting the application
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/6695e719-b596-4e18-843a-29a35707d218/deploy-status)](https://app.netlify.com/sites/fabulous-duckanoo-036ea2/deploys)
 
-This part is easy. As you can see on the status badge above, the app is alive and well in Netlify. Click <a href="https://634b3d6e102a2600083049d1--fabulous-duckanoo-036ea2.netlify.app/">here</a> to get to the app in order to check that all use cases have been covered, as well as the constraints.
+This part is easy. As you can see on the status badge above, the app is alive and well in Netlify. Click <a href="https://main--fabulous-duckanoo-036ea2.netlify.app/">here</a> to get to the app in order to check that all use cases have been covered, as well as the constraints.
 
 You will be able to:
 
 - Create a poll question
+
   - with a minumum of **two** options
   - with a maximum of **ten** options
 

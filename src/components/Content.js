@@ -1,15 +1,20 @@
 import React, { useState } from 'react';
-import AnswersChart from './AnswersChart';
+import BarChart from './BarChart';
 
 export default function Content() {
-	const [options, setOptions] = useState([{ option: '' }, { option: '' }]);
-	const [visible, setVisible] = useState(false);
+	const [options, setOptions] = useState([
+		{ option: '', votes: 0 },
+		{ option: '', votes: 0 },
+	]);
+	const [vote, setVote] = useState(0);
 	const [questionText, setQuestionText] = useState('');
+	const [visible, setVisible] = useState(false);
+	const [chartReady, setChartReady] = useState(false);
 
 	let questionTextField;
 
 	const addOption = () => {
-		setOptions([...options, { option: '' }]);
+		setOptions([...options, { option: '', votes: 0 }]);
 	};
 
 	const removeOption = (index) => {
@@ -42,25 +47,22 @@ export default function Content() {
 		window.location.reload();
 	};
 
-	const chartData = [
-		{ title: '1950', value: 2, color: '#000000' },
-		{ title: '1960', value: 3, color: '#000000' },
-		{ title: '1970', value: 3, color: '#000000' },
-		{ title: '1980', value: 4, color: '#000000' },
-		{ title: '1990', value: 5, color: '#000000' },
-		{ title: '2000', value: 6, color: '#000000' },
-		{ title: '2010', value: 7, color: '#000000' },
-		{ title: '2010', value: 7, color: '#000000' },
-		{ title: '2010', value: 8, color: '#000000' },
-		{ title: '2010', value: 10, color: '#000000' },
-	];
+	const onChangeRadio = (event) => {
+		const tmpVote = event.target.value;
+		setVote(tmpVote);
+	};
 
-	const createGraph = () => {};
+	const createGraph = () => {
+		let tmpOptions = [...options];
+
+		tmpOptions[vote].votes += 1;
+
+		setChartReady(true);
+		setOptions(tmpOptions);
+	};
 
 	return (
-		<div
-			className='container-fluid'
-			style={{ backgroundColor: 'green', height: '80vh' }}>
+		<div className='container-fluid' style={{ height: '80vh' }}>
 			<div className='row'>
 				{/* LEFT CONTENT */}
 				<div
@@ -150,20 +152,25 @@ export default function Content() {
 					{visible && (
 						<div className='container-fluid d-flex justify-content-center'>
 							<div className='text-center'>
-								<h5 className='text-white'>{questionText}</h5>
+								<h5 className='mb-5'>{questionText}</h5>
 								<ul>
 									{options.map((option, index) => {
 										return (
-											<div key={index} className='form-check'>
+											<div
+												key={index}
+												className='form-check'
+												onChange={(event) => {
+													onChangeRadio(event);
+												}}>
 												<input
 													className='form-check-input'
 													type='radio'
 													name='flexRadioDefault'
-													id='flexRadioDefault1'
+													value={index}
 												/>
 												<label
 													className='form-check-label'
-													for='flexRadioDefault1'>
+													htmlFor='flexRadioDefault1'>
 													{option.option}
 												</label>
 											</div>
@@ -187,15 +194,14 @@ export default function Content() {
 					)}
 				</div>
 				{/* RIGHT CONTENT */}
-				<div className='col-lg-4 col-md-12' style={{ height: '80vh' }}>
-					<div>
-						<div className='container-fluid d-flex justify-content-center'>
-							<div className='text-center'>
-								{/* Merge arrays */}
-								<AnswersChart answers={chartData} />
-							</div>
+				<div
+					className='container-fluid col-lg-4 col-md-12 d-flex align-items-center'
+					style={{ height: '80vh' }}>
+					{chartReady && (
+						<div className=''>
+							<BarChart title={questionText} options={options} />
 						</div>
-					</div>
+					)}
 				</div>
 			</div>
 		</div>
